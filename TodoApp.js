@@ -1,73 +1,45 @@
-import React, {useState} from 'react'
-import TodoDel from './TodoDel';
+import React, { useState } from 'react'
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import Tooltip from '@material-ui/core/Tooltip';
+import TodoDel from '../TodoDel';
 
+const TodoApp = () => {
+    const [item, setItem] = useState('Buy An APPLE')
+    const [insert, setInsert] = useState([])
 
-const TodoApp = () =>{
-    const [inputList,setInput] = useState('')
-    // const [updInput,setUpdInput] = useState('')
-
-    const [Items,setItems] = useState([])
-
-    const eventItem = (event) =>{
-    setInput(event.target.value)
+    const itemList = (event) => {
+        setItem(event.target.value)
     }
+    const AddItem = () => {
 
-    const listOfItem = () =>{
-        setItems((prevItem)=>{
-            return [...prevItem,inputList];
+        setInsert((prevItem) => {
+            return [...prevItem, item]
         })
-     setInput('')
+        setInsert('')
     }
-    const delItem = (id) =>{
-        console.log("DELETE")
-
-        setItems((prevItem)=>{
-            return prevItem.filter((arrEle,index)=>{
-             return index !== id
-            })
-        })
-    }
-    
-    // const updItem =(event)=>{
-    //     setUpdInput(event.target.value)
-    // }
-    // const upDate =()=>{
-    //     console.log("UPDATE")
-    //     let updInput=<input  type='text' placeholder='Add Your Item' value={updInput} onChange={updItem}/>
-    //     setItems((prevItem)=>{
-    //         return [...prevItem,updItem];    
-            
-    //     })
-    // }
-   
-    return(
-        <>
-        <div className ='main-div'>
+    return (
+        <div className='main-div'>
             <div className='center-div'>
-                <br/>
+                <br />
                 <h1>ToDo List </h1>
-                <br/>
-                <input type='text' placeholder='Add Your Item' value={inputList} onChange={eventItem} />
-                <button onClick={listOfItem}> + </button>
+                <br />
+                <input type='text' placeholder='Add Your Item' onChange={itemList} />
+                <Tooltip title="Add">
+                    <Button className='myBtn' onClick={AddItem} > <AddIcon />
+                    </Button>
+                </Tooltip>
                 <ol>
-    {/* <li>{inputList}</li> */}
-    {Items.map((itemval,index)=>{
-        return (
-            <TodoDel
-            key={index}
-            id={index}
-            text={itemval}
-            onselect={delItem}
-            // onupdate={upDate}
-            />
-        )
+    {insert.map((value) => {
+        return( <li>{value}</li>);
+   
+     
     })}
                 </ol>
+
             </div>
         </div>
-        </>
     );
-
 }
 
 export default TodoApp;
